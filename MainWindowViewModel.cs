@@ -16,80 +16,40 @@ namespace RealmWinUI
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        public MainWindowViewModel() 
+        public MainWindowViewModel()
         {
             var config = new RealmConfiguration(@"d:\temp\cats.realm");
 
-            try
-            {
-                Realm.DeleteRealm(config);
-            }
-            catch 
-            {
-                // ignore
-            }
-
             _localRealm = Realm.GetInstance(config);
-           
+
+            CatsQuery = _localRealm.All<Cat>(); //.AsQueryable();
         }
 
         private Realm _localRealm;
 
-      
+        [ObservableProperty] 
         private IQueryable<Cat> _catsQuery;
-        public IQueryable<Cat> CatsQuery
-        {
-            get => _catsQuery ??= _localRealm.All<Cat>();
-            set => SetProperty(ref _catsQuery, value);
-        }
-   
+        
         public Cat? SelectedCat { get; set; }
 
-
-        private RelayCommand _removeCommand;
-        public RelayCommand RemoveCommand => _removeCommand ??= new RelayCommand(RemoveCat);
+        [RelayCommand]
         private void RemoveCat()
         {
             if (SelectedCat == null)
-                return; 
-    
-            
-            try
-            {
-                _localRealm.Write(() => {
-                    _localRealm.Remove(SelectedCat);
+                return;
 
-                });
-            }
-            catch (Exception ex)
-            {
-                // the selected cat is not removed from the datagrid.
-                // In the case of binding to a listbox. The deleted object still shows but it rises exception if selected.
-                Debug.WriteLine($@"Error deleting the selected cat. {ex.Message}");
-            }
-           
-
+            _localRealm.Write(() => { _localRealm.Remove(SelectedCat); });
         }
 
-        private RelayCommand _populateCommand;
-        public RelayCommand PopulateCommand => _populateCommand ??= new RelayCommand(Populate);
-        private void Populate()
+        [RelayCommand]
+        public void Populate()
         {
             Cat ninja = new() { Name = "Ninja", Age = 1, Breed = "Angora" };
             Cat nounou = new() { Name = "Nounou", Age = 2, Breed = "Siamese" };
-            Cat leila = new() { Name = "Leila", Age = 3, Breed = "Local" };
 
-            try
-            {
-                _localRealm.Write(() => _localRealm.Add(nounou));
-                _localRealm.Write(() => _localRealm.Add(ninja));
-                _localRealm.Write(() => _localRealm.Add(leila));
-            }
-            catch (RealmFileAccessErrorException ex)
-            {
-                Debug.WriteLine($@"Error writeing to the realm file. {ex.Message}");
-            }
+          
+            _localRealm.Write(() => _localRealm.Add(nounou));
+            _localRealm.Write(() => _localRealm.Add(ninja));
         }
-
     }
 }

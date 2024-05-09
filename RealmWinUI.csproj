@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
@@ -27,7 +27,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
-    <PackageReference Include="Realm" Version="11.7.0" />
+    <PackageReference Include="Realm" Version="12.1.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

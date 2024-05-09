@@ -3,19 +3,17 @@
     x:Class="RealmWinUI.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RealmWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Button Content="Populate" Command="{x:Bind MainViewModel.PopulateCommand}" />
-        <Button Content="Delete" Command="{x:Bind MainViewModel.RemoveCommand}" />
+        <Button Content="Delete" Command="{x:Bind MainViewModel.RemoveCatCommand}" />
 
         <ListBox ItemsSource="{x:Bind  MainViewModel.CatsQuery}"
                  DisplayMemberPath="Name"
-                 SelectedItem="{x:Bind MainViewModel.SelectedCat, Mode=TwoWay}"
-                 >
-        </ListBox>
+                 SelectedItem="{x:Bind MainViewModel.SelectedCat, Mode=TwoWay}"/>
+
     </StackPanel>
 </Window>
