@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RealmWinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "RealmWinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
